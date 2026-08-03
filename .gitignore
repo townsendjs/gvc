@@ -1,0 +1,23 @@
+# Python virtual environment — 2.0 GB / 44,000+ files. Never commit this.
+gvc_venv_311/
+venv/
+.venv/
+
+# Bootstrap script, not part of the project
+get-pip.py
+
+# Python artefacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Working directories — source frames and renders are large and are the
+# artist's own material, not part of the published method
+data/
+output/
+video_frames/
+
+# macOS
+.DS_Store
+*.conflicted copy*
+*conflicted copy*

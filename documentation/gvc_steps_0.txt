@@ -1,0 +1,136 @@
+This is how I'm seeing the process working. Imagine that we have a file cabinet with 3 drawers. Each drawer will contain folders (containers) that contain images that will be used to compile the video. Each drawer will eventually contain 360 images. 12 frames persecond for 30 seconds. 
+
+The first step is to 'fillThe Drawer' by creating 'containers' using the base process (baseProcess). The baseProcess is to create a container that will be assigned a random number (randomNumber) between 10 and 40, a random opacity (randomOpacity) between 30 and 70%, and a random blend mode (randomBlendMode) (multiply, screen, overlay, or soft light (or something comprable to the Adobe blend modes)).
+
+The second step is to create an image array (imageArray) whose value is the randomNumber and will have the randomOpacity and randomBlendMode assigned to it. This will be the 'seek and fill' process (seekAndFill) and will consist of going into a random folder within the 'video_frames' folder and selecting a random image within that folder. That image will be the first in the imageArray with the subsequent images in that folder completing the arrray. IF there are not enough images after the randomly selected image in that folder to complete the imageArray THEN the seekAndFill process will run again until it acquires enough images to fill that 'container'.
+
+The third step is to continue creating and filling the 'containers'. After each container is filled, the randomNumber will be subtracted from 360. IF the sum of all the randomNumbers assigned to each container is greater than 40 THEN a new container will be generated using the baseProcess. IF the number is less than 40 THEN the final container in that "drawer" will take that value and bypass the randomNumber process. This container will still have a randomOpacity and randomBlendMode assigned to it. 
+
+The fourth step is to run steps 1-3 for the second and third "drawers." Once this is complete, each "drawer" should contain a total of 360 images.
+
+The fifth step is to start with the first image taken from the first container and assign each of those images a value from 1 to 360. (or 0-359 if that is best practice).
+
+The sixth step is to compile the images (imageCompile) based on their value. Image 1 (with its assigned randomOpacity and randomBlendMode taken from its container's values) in drawer 1 will be layered on top of image 1 (with its assigned randomOpacity and randomBlendMode taken from its container's values) in drawer 2 which will be layered on top of image 1 (with its assigned randomOpacity and randomBlendMode taken from its container's values) in drawer 3. 
+
+The seventh step is to 'collapse' those three images into a single image. The script will then look at that image as if it's in a state of diffusion and discern the determine the imagery within, looking for human figures, architectural elements, objects, geometric elements, or an abstracted state. This will be 'frame' 1.
+
+The eith step is to continue running steps 6 and 7 until there is an image seuence (imageSequence) that is 360 'frames'.
+
+The ninth step is to, starting after frame 1, add a frame that interpolates the frame before it and the frame after it (interpolatedFrame) until reaches frame 360. This will take the total frames from 360 to 719 (as you will not need to interpolate a frame after frame 360 of the 'collapsed images'). If a 720th frame is necessary repeat frame 719.
+
+The tenth step is compile that imageSequence and export an .mp4 file. That video file should now be 30 seconds long and have a frame rate of 24 frames per second. Please name the output.mp4 files in a way so that I continue to run the script without overwriting the previous outputted video.
+
+____________________________________
+
+ChatGPT rewrite
+____________________________________
+
+This is how I'm seeing the process working. Imagine that we have a file cabinet with 3 drawers. Each drawer will contain folders (containers) that contain images that will be used to compile the video. Each drawer will eventually contain 360 images. 12 frames persecond for 30 seconds.
+
+Step 1 - Fill The Drawer (Container Creation with Base Process):
+Initiate the 'Fill The Drawer' step by creating a series of 'containers'. Each container is generated through the 'baseProcess', which assigns three key attributes to it:
+
+1. Random Number (randomNumber): This number, randomly selected between 10 and 40, dictates the total count of images that will be assigned to this container. It determines the size of the image array that will be gathered from the 'video_frames' folder.
+
+2. Random Opacity (randomOpacity): Assign a random opacity value between 30% and 70% to each container. This opacity setting will be applied to all images within the container.
+
+3. Random Blend Mode (randomBlendMode): Choose a random blend mode for each container from the following options: multiply, screen, overlay, or soft light (or comparable modes to those found in Adobe software).
+
+These attributes set the foundational parameters for how each container will contribute to the final video compilation, influencing both the visual variety and the blending dynamics of the resulting imagery.
+
+Step 2 - Image Array Creation and Seek and Fill Process (seekAndFill):
+This step involves populating each container with images to meet its specific 'randomNumber' requirement, which determines the number of images in the container. The process is as follows:
+
+1. Selecting Initial Images:
+• Randomly select a folder within the 'video_frames' directory.
+• Within this folder, choose a random starting image.
+
+2. Fulfilling Container Image Count:
+• From the starting image, sequentially select subsequent images to add to the container.
+• Continue this process until you either reach the end of the folder or fulfill the 'randomNumber' count for the container.
+
+3. Handling Insufficient Images:
+• If the number of available images in the folder is less than the 'randomNumber', do the following:
+- Count the number of images acquired from this folder.
+- Subtract this count from the 'randomNumber' to determine the remaining number of images needed.
+- Select another random folder and a random starting image within it.
+- Repeat the process of adding subsequent images to the container.
+- Continue this cycle - selecting a new folder and starting image, and then adding images - until the total count of images in the container matches the original 'randomNumber'.
+
+4. Completion of Image Array:
+• Once the container holds a number of images equal to its assigned 'randomNumber', the process for that container is complete. Each image in this array will also inherit the container's 'randomOpacity' and 'randomBlendMode' settings.
+
+Step 4 – Run steps 1-3 for the second and third "drawers." Once this is complete, each "drawer" should contain a total of 360 images.
+
+Step 5 – Start with the first image taken from the first container and assign each of those images a value from 1 to 360. (or 0-359 if that is best practice).
+
+Step 6 - Image Layering and Blending with Pillow or OpenCV:
+
+In this step, the script will utilize either the Pillow library or OpenCV for Python to handle the image layering and blending process. This approach provides a balance between functionality and ease of implementation. The process will be as follows:
+
+1. Image Processing with Pillow/OpenCV:
+• Utilize either Pillow or OpenCV to load images from the containers of each drawer.
+• Apply the 'randomOpacity' and 'randomBlendMode' to each image, ensuring that the blending modes (multiply, screen, overlay, soft light, or comparable modes) are replicated as closely as possible within the capabilities of the chosen library.
+
+2. Sequential Layering:
+• Layer the images sequentially based on their assigned values across the drawers.
+• For instance, overlay Image 1 from Drawer 1 with Image 1 from Drawer 2, and then overlay this combined image with Image 1 from Drawer 3, each maintaining their specific blend mode and opacity.
+
+3. Exporting Combined Images:
+• After blending the images correctly, export each resulting image. These images will then be used in the subsequent steps for video compilation.
+
+4. Script Efficiency:
+• Ensure that the image processing and layering operations are efficient and automated, minimizing manual intervention and enhancing the workflow.
+
+Step 7 - Image Analysis for Element Recognition:
+
+In this step, the script will perform image analysis on the 'collapsed' images to recognize elements like human figures, architectural details, objects, geometric shapes, or abstract patterns.
+
+1. Use TensorFlow or OpenCV for Image Recognition:
+• Consider using TensorFlow with a pre-trained model such as Inception or MobileNet. These models are capable of analyzing images and identifying a variety of elements.
+• Alternatively, OpenCV with its deep learning modules can also be used for similar tasks.
+
+2. Process Each Collapsed Image:
+• The script should run each 'collapsed' image through the chosen image recognition tool. The goal is to identify and recognize various elements within the image.
+
+3. Simple Interpretation of Recognized Elements:
+• The script should interpret the output from the image recognition tool to determine the predominant elements in each image. Focus on basic identification rather than detailed categorization.
+
+4. Integration with Video Compilation:
+• Ensure that this image analysis step is well-integrated with the overall video compilation process. The identified elements in each image should contribute to the narrative or visual theme of the final video output.
+
+5. Documentation of Process and Results:
+• Maintain documentation of the image recognition process and the outcomes for each image. This will be useful for reviewing the effectiveness of the approach and making any necessary adjustments in future iterations.
+
+Step 8 – Continue running steps 6 and 7 until there is an image seuence (imageSequence) that is 360 'frames'.
+
+Step 9 - Frame Interpolation:
+
+This step involves adding interpolated frames between the existing images to create a smoother transition in the final video.
+
+1. Use an Interpolation Tool:
+• Consider using tools like OpenCV or FFmpeg for frame interpolation.
+
+2. Interpolating Frames:
+• The script should take each 'collapsed' image and the subsequent image, then generate an interpolated frame that blends the two. This is for a smooth transition effect.
+• Perform this interpolation process for all frames. This will take the total frames from 360 to 719 (as you will not need to interpolate a frame after frame 360 of the 'collapsed images'). If a 720th frame is necessary repeat frame 719.
+
+3. Integration with the Video Sequence:
+• Integrate these interpolated frames into the existing sequence, placing each interpolated frame between its two original frames.
+•This process will increase the frame count, enhancing the fluidity of the final video.
+
+Step 10 - Video Compilation and Naming Convention:
+
+In the final step, compile the complete sequence of images (including the interpolated frames) into a video file.
+
+1. Video Compilation:
+• Use a video processing tool like FFmpeg to compile the image sequence into an .mp4 video file.
+• Ensure the video is compiled at a frame rate of 24 frames per second, resulting in a 30-second video given the total frame count.
+
+2. Naming Convention for Output Files:
+• Implement a naming convention that uses timestamps to differentiate each output video. This prevents overwriting previous outputs.
+• Format the file name as GenerativeVideoCompiler_Output_[YYYYMMDD_HHMMSS].mp4, where [YYYYMMDD_HHMMSS] is replaced by the year, month, day, hour, minute, and second of the video's creation time.
+• This format ensures each output file is uniquely named based on the exact time of its generation.
+
+3. Exporting the Video File:
+• After compiling the video, save it with the designated name format to the specified output directory.

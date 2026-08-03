@@ -1,0 +1,11 @@
+# acivate venv
+source /Users/jefftownsend/Dropbox/arts/video/video_art/GenerativeVideoCompiler/github_repository/gvc_venv_311/bin/activate
+
+# enter gvc directory
+cd /Users/jefftownsend/Dropbox/arts/video/video_art/GenerativeVideoCompiler/github_repository
+
+#run gvc script
+python3 scripts/generative_video_compiler.py
+
+#run aider
+aider --4turbo

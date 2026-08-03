@@ -1,0 +1,20 @@
+I have a directory of video frames that I've collected from found footage. I'd like a script that will randomly select a 'video_frames' folder and choose a starting frame from within. The script will then select a random number of subsequent frames, between 24 and 180, to create a sequence. Multiple sequences (at least three) will be chosen and layered on top of each other, each with varying opacity levels and blending modes such as multiply, screen, overlay, or soft light. After blending these layers, the script will interpret the resultant image as 'noise' and apply a diffusion process to create 'imagery.'
+
+The script will then export these images at 12 frames per second (fps), creating a sequence 10 seconds long. Frame interpolation will be used between the generated images to blend the frames smoothly, ultimately exporting a .mp4 file at 24 fps that is 10 seconds long.
+
+GenerativeVideoCompiler is an experimental video art script, or environment, that transforms found footage into a layered, temporal collage. It operates by first scouring a curated directory of video frames. Through a randomized yet controlled process, the app selects a sequence of frames, ranging from 24 to 180, to form the base of a visual sequence. These sequences are then algorithmically layered, introducing a crafted opacity and employing a variety of blending modes, such as multiply, screen, overlay, and soft light. This method is akin to a digital form of decoupage, piecing together disparate moments into a cohesive whole.
+
+The app's heart lies in its 'diffusion' feature, where the blended images, seen as 'noise,' undergo a sophisticated diffusion process. This is not merely a technical step but an artistic one, where the 'noise' is interpreted and reimagined into 'imagery,' a process reminiscent of finding shapes in clouds. This feature allows for art to emerge from the chaos.
+
+Once the images are diffused into a coherent form, GenerativeVideoCompiler exports these at a cinematic 12 fps, creating a sequence that is 10 seconds in duration (subject to change as tests results are evaluated). To ensure a fluid visual experience, frame interpolation is deftly applied between the generated images to blend them seamlessly. The final output is a .mp4 video file at 24 fps, offering a window into a re-envisioned past, telling new stories through the alchemy of old visuals.
+
+GenerativeVideoCompiler is a digital crucible for video artistry and reinterpretation of visual data. It challenges the boundaries between the found and the created, between the past and the present, and ultimately between noise and signal.
+
+__________________
+
+
+GenerativeVideoCompiler is an experimental video art script, or environment, that transforms found footage into a layered, temporal collage. It operates by first scouring a curated directory of video frames. Through a randomized yet controlled process, the app selects a sequence of frames, ranging from 10 to 75, to form the base of a visual sequence. These sequences are then algorithmically layered, introducing a crafted opacity and employing blending modes. This method is akin to a digital form of decoupage, piecing together disparate moments into a cohesive whole.
+
+The blended images, seen as "noise," undergo a diffusion process. This is not merely a technical step but an artistic one, where the "noise" is interpreted and reimagined into imagery - recognizable elements like human figures, architectural elements, landscapes, cityscapes, objects, geometric shapes, or abstract patterns a process reminiscent of finding shapes in clouds. This feature allows for art to emerge from the chaos.
+
+GenerativeVideoCompiler is a digital crucible for video artistry and reinterpretation of visual data. It challenges the boundaries between the found and the created, between the past and the present, and ultimately between noise and signal.
