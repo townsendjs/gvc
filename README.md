@@ -113,11 +113,24 @@ to be read, not run.
 
 ---
 
+## The build logs
+
+`documentation/2023-build-logs/aider.chat.history.md` is the verbatim transcript of
+the sessions in which the script was written — eight sessions between 11 November
+and 26 December 2023, using GPT-4 through [aider](https://aider.chat) v0.17.
+
+It is unedited. It records the project under its earlier name, *Lost and Looking*,
+when it was still an attempt at a GAN, and it contains every wrong turn, refusal
+and misunderstanding on the way to the script that shipped. Read alongside the
+section above, it is the other half of the account: the specification, the
+conversation, and the gap between what was asked for and what was built.
+
 ## Repository
 
 ```
 scripts/         the two versions
 documentation/   the original design documents and flow diagrams, as written in 2024
+  2023-build-logs/   the AI sessions in which the script was written
 ```
 
 The design documents are unedited. They describe the system as intended, which is
