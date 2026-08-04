@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 450" width="1360" height="450" role="img" aria-label="Generative Video Compiler 2026 pipeline: source library, sampler, cabinet of three drawers, composite, cross-dissolve, encode.">
+<title>Generative Video Compiler — 2026 pipeline</title>
+
+<rect x="0" y="0" width="1360" height="450" fill="#232122"/>
+
+<g font-family="ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">
+
+  <text x="40" y="44" fill="#E0DFDD" font-size="17" letter-spacing="1.6">GENERATIVE VIDEO COMPILER</text>
+  <text x="1320" y="44" fill="#928E8F" font-size="10.5" letter-spacing="1.1" text-anchor="end">2026 REVISION</text>
+  <line x1="40" y1="62" x2="1320" y2="62" stroke="#3B393B" stroke-width="1"/>
+  <text x="40" y="84" fill="#928E8F" font-size="10.5" letter-spacing=".5">Every step in this diagram runs.</text>
+
+  <!-- ============ stage boxes ============ -->
+  <g fill="none" stroke="#E0DFDD" stroke-width="1.25">
+    <rect x="40"   y="172" width="180" height="56"/>
+    <rect x="260"  y="172" width="180" height="56"/>
+    <rect x="700"  y="172" width="180" height="56"/>
+    <rect x="920"  y="172" width="180" height="56"/>
+    <rect x="1140" y="172" width="180" height="56"/>
+  </g>
+
+  <!-- cabinet -->
+  <rect x="480" y="116" width="180" height="168" fill="none" stroke="#E0DFDD" stroke-width="1.25"/>
+  <text x="570" y="138" fill="#928E8F" font-size="9" letter-spacing="1.5" text-anchor="middle">CABINET</text>
+  <g fill="none" stroke="#5E5C5F" stroke-width="1">
+    <rect x="496" y="148" width="148" height="38"/>
+    <rect x="496" y="190" width="148" height="38"/>
+    <rect x="496" y="232" width="148" height="38"/>
+  </g>
+  <g fill="#E0DFDD" font-size="10" letter-spacing=".8" text-anchor="middle">
+    <text x="570" y="166">DRAWER 1</text>
+    <text x="570" y="208">DRAWER 2</text>
+    <text x="570" y="250">DRAWER 3</text>
+  </g>
+  <g fill="#928E8F" font-size="8" text-anchor="middle">
+    <text x="570" y="178">360 frames</text>
+    <text x="570" y="220">360 frames</text>
+    <text x="570" y="262">360 frames</text>
+  </g>
+
+  <!-- stage labels -->
+  <g fill="#E0DFDD" font-size="11.5" letter-spacing="1" text-anchor="middle">
+    <text x="130"  y="205">SOURCE</text>
+    <text x="350"  y="205">SAMPLER</text>
+    <text x="790"  y="205">COMPOSITE</text>
+    <text x="1010" y="205">DISSOLVE</text>
+    <text x="1230" y="205">ENCODE</text>
+  </g>
+
+  <!-- ============ connectors ============ -->
+  <g stroke="#928E8F" stroke-width="1.25" fill="#928E8F">
+    <line x1="226" y1="200" x2="247" y2="200"/><path d="M254 200 L246 196 L246 204 Z"/>
+    <line x1="446" y1="200" x2="467" y2="200"/><path d="M474 200 L466 196 L466 204 Z"/>
+    <line x1="666" y1="200" x2="687" y2="200"/><path d="M694 200 L686 196 L686 204 Z"/>
+    <line x1="886" y1="200" x2="907" y2="200"/><path d="M914 200 L906 196 L906 204 Z"/>
+    <line x1="1106" y1="200" x2="1127" y2="200"/><path d="M1134 200 L1126 196 L1126 204 Z"/>
+  </g>
+
+  <!-- ============ annotations ============ -->
+  <g font-size="9.5" text-anchor="middle" fill="#928E8F">
+    <text x="130" y="312">found footage</text>
+    <text x="130" y="326">any image format</text>
+    <text x="130" y="340">searched recursively</text>
+
+    <text x="350" y="312">contiguous runs</text>
+    <text x="350" y="326">10–75 frames</text>
+    <text x="350" y="340">seeded RNG</text>
+
+    <text x="570" y="312">each container carries</text>
+    <text x="570" y="326" fill="#AFFC00">a blend mode</text>
+    <text x="570" y="340" fill="#AFFC00">+ opacity 30–70%</text>
+
+    <text x="790" y="312" fill="#AFFC00">multiply · screen</text>
+    <text x="790" y="326" fill="#AFFC00">overlay · soft-light</text>
+    <text x="790" y="340">applied at opacity</text>
+
+    <text x="1010" y="312">each frame mixed</text>
+    <text x="1010" y="326">with the next</text>
+    <text x="1010" y="340">360 → 720 frames</text>
+
+    <text x="1230" y="312" fill="#AFFC00">ffmpeg · libx264</text>
+    <text x="1230" y="326" fill="#AFFC00">crf 18</text>
+    <text x="1230" y="340">→ output.mp4</text>
+  </g>
+
+  <!-- ============ footer ============ -->
+  <line x1="40" y1="396" x2="1320" y2="396" stroke="#3B393B" stroke-width="1"/>
+  <rect x="40" y="412" width="9" height="9" fill="#AFFC00"/>
+  <text x="60" y="421" fill="#928E8F" font-size="9.5">Lime marks the steps the 2024 script specified but never carried out.</text>
+  <text x="1320" y="421" fill="#5E5C5F" font-size="9.5" text-anchor="end">jstownsend.com/gvc</text>
+
+</g>
+</svg>

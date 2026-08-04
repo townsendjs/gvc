@@ -1,100 +1,27 @@
 # Generative Video Compiler
 
 A randomised temporal collage engine for video art. It samples contiguous runs of
-frames from a library of found footage, layers three parallel streams, blends
-them, and cross-dissolves the result into a doubled-rate image sequence.
+frames from a library of found footage, layers three parallel streams, blends them
+with random modes and opacities, and cross-dissolves the result into a doubled-rate
+image sequence.
 
-It produced the short film **[Taken Pictures](https://jstownsend.com/artwork)**
-(2024, 6m 33s).
+No generative model touches a pixel. Everything you see is found footage, recombined.
 
-![flow diagram](documentation/gvc-flow-chart.png)
-
----
-
-## What it actually does
-
-Three "drawers", each holding 360 frames. Each drawer is filled with
-**containers** — contiguous runs of 10 to 75 frames, taken from a random starting
-point in a random folder of the source library, spilling into another folder when
-a run comes up short. Every container is assigned a random blend mode and a random
-opacity between 30% and 70%.
-
-The three drawers are then composited frame-against-frame — drawer 1 with drawer 2,
-that result with drawer 3 — and each blended frame is cross-dissolved with the next
-to double the frame count.
-
-No generative model touches a pixel. Everything you see is found footage,
-recombined.
+![The 2026 pipeline: source, sampler, a cabinet of three drawers, composite, dissolve, encode](documentation/gvc-2026-pipeline.svg)
 
 ---
 
-## How it was made
-
-I don't write Python.
-
-The method was designed as a document, not as code — a file cabinet with three
-drawers, containers of random size, images inheriting their container's opacity
-and blend mode. When plain description failed to get the idea across, I drew it:
-[`documentation/video-diffusion-amalgamation-script-flow-diagram.pdf`](documentation/video-diffusion-amalgamation-script-flow-diagram.pdf).
-That diagram is what finally made the system legible to a machine, and the script
-in `scripts/generative_video_compiler_2024.py` is what came back.
-
-The interesting part is what happened next.
-
----
-
-## What it was supposed to do, and didn't
-
-Reading the 2024 script back in 2026 — two years after the film was finished and
-shown — turned up four gaps between the design and the implementation:
-
-| specified | actual |
-|---|---|
-| Random blend mode per container: multiply / screen / overlay / soft-light | **Only `multiply`.** The mode was assigned, printed to the console, and never read |
-| Random opacity, 30–70% | Assigned, printed, **never applied** |
-| Blended frames analysed by InceptionV3 to recognise figures, architecture, landscape | The model **loads**, every frame is preprocessed for it, and `predict()` is **never called**. The pass does nothing, 360 times |
-| Compiles a video | It doesn't. `subprocess` is imported but unused; the last step renames files into a folder. Assembly happened by hand |
-
-The first two are why every export came out dark.
-
-Multiply always darkens, and here it ran three layers deep at full strength with
-no opacity to soften it. For three mid-range source frames:
-
-```
-what ran:        0.45 × 0.50 × 0.55  →   32/255     (~12% grey)
-what was asked:  random mode @ ~50%  →  ~121/255    (normal exposure)
-```
-
-Roughly four times darker than intended. For the entire life of the project, every
-output was pulled back up by hand with curves in Premiere — correcting, without
-knowing it, for two lines of code that never ran. You couldn't tell what the
-machine had made until you lit it yourself.
-
-I found this out in 2026, while documenting the piece for my website.
-
----
-
-## The two scripts
-
-**`scripts/generative_video_compiler_2024.py`** — the original, preserved exactly
-as it ran, bugs included. This is the one that made *Taken Pictures*. Its errors
-are the reason the film looks the way it does, so it should not be corrected.
-
-**`scripts/generative_video_compiler_2026.py`** — a working revision. It applies
-the blend modes and opacities as originally specified, drops the dead recognition
-pass (and with it the TensorFlow dependency), takes its paths as arguments,
-accepts a seed so a run can be reproduced, and compiles the video if `ffmpeg` is
-on your PATH.
-
-The two make different images. That's the point of keeping both.
-
----
-
-## Running the 2026 version
+## Install
 
 ```bash
 pip install pillow numpy tqdm
+```
 
+`ffmpeg` on your PATH is optional. Without it you still get the full image sequence.
+
+## Run
+
+```bash
 python scripts/generative_video_compiler_2026.py \
   --frames-dir /path/to/your/frames \
   --output ./output \
@@ -103,38 +30,93 @@ python scripts/generative_video_compiler_2026.py \
   --seed 7
 ```
 
-`--frames-dir` is searched recursively; each subfolder is treated as one
-continuous source, so runs sampled from it stay temporally contiguous. Frames
-inherit the source resolution unless you pass `--size 1024x576`. Pass `--seed` to
-make a run repeatable, `--no-video` to stop at the image sequence.
+`--frames-dir` is searched recursively, and **each subfolder is treated as one
+continuous source**, so runs sampled from it stay temporally contiguous. Point it at a
+folder of folders, one per clip.
 
-The 2024 script needs TensorFlow, OpenCV and hardcoded absolute paths. It is here
-to be read, not run.
+## Options
+
+| flag | default | |
+|---|---|---|
+| `--frames-dir` | *required* | source frames, searched recursively |
+| `--output` | `./output` | where to write |
+| `--frames` | `360` | frames per drawer |
+| `--drawers` | `3` | parallel streams to blend |
+| `--fps` | `24` | output frame rate |
+| `--size` | source size | force a resolution, e.g. `1024x576` |
+| `--seed` | — | seed the RNG so a run can be repeated exactly |
+| `--no-video` | — | stop after the image sequence |
+
+Output lands in `blended/`, then `final_sequence/`, then `output.mp4`.
 
 ---
 
+## Where this came from
+
+This started in 2023 as a method, not a program. I don't write Python. I described a
+file cabinet with three drawers, containers of random size, images inheriting their
+container's blend mode and opacity — and when describing it in words failed, I drew it:
+[`video-diffusion-amalgamation-script-flow-diagram.pdf`](documentation/video-diffusion-amalgamation-script-flow-diagram.pdf).
+That drawing is what finally made the system legible to a machine, and
+`scripts/generative_video_compiler_2024.py` is what came back.
+
+It made the short film **[Taken Pictures](https://jstownsend.com/artwork)** (2024, 6m 33s).
+
+Reading that script again in 2026 turned up four gaps between the design and the build:
+
+| specified | built |
+|---|---|
+| Random blend mode per container — multiply / screen / overlay / soft-light | **Only `multiply`.** The mode was assigned, printed to the console, and never read |
+| Random opacity, 30–70% | Assigned, printed, **never applied** |
+| Diffusion — the blended frame read as noise, resolved back into imagery | **Never written.** An InceptionV3 recognition pass appeared in its place, and `predict()` was never called. The pass does nothing, 360 times |
+| Compiles a video | It doesn't. `subprocess` is imported but unused; the last step places image sequences in a folder |
+
+The first two are why every export came out dark. Multiply always darkens, and here it
+ran three layers deep at full strength with no opacity to soften it:
+
+```
+built      0.45 × 0.50 × 0.55           →   32/255    (~12% grey)
+specified  random mode @ ~50% opacity   →  ~121/255   (normal exposure)
+```
+
+Roughly four times darker than intended. For the whole life of the project every output
+was pulled back up with curves in Premiere — correcting, without knowing it, for two
+lines of code that never ran.
+
+**The full account is on my site: [jstownsend.com/gvc](https://jstownsend.com/gvc)**
+
+## The 2024 original
+
+`scripts/generative_video_compiler_2024.py` is preserved exactly as it ran, bugs
+included. It is the one that made *Taken Pictures*, and its errors are the reason the
+film looks the way it does, so it should not be corrected.
+
+It needs TensorFlow, OpenCV and hardcoded absolute paths. It is here to be read rather
+than run — though if you want the images the broken version made, that is the file that
+makes them.
+
 ## The build logs
 
-`documentation/2023-build-logs/aider.chat.history.md` is the verbatim transcript of
-the sessions in which the script was written — eight sessions between 11 November
-and 26 December 2023, using GPT-4 through [aider](https://aider.chat) v0.17.
+`documentation/2023-build-logs/aider.chat.history.md` is the verbatim transcript of the
+sessions in which the script was written — eight sessions between 11 November and 26
+December 2023, using GPT-4 through [aider](https://aider.chat) v0.17.
 
-It is unedited. It records the project under its earlier name, *Lost and Looking*,
-when it was still an attempt at a GAN, and it contains every wrong turn, refusal
-and misunderstanding on the way to the script that shipped. Read alongside the
-section above, it is the other half of the account: the specification, the
-conversation, and the gap between what was asked for and what was built.
+It is unedited. It records the project under its earlier name, *Lost and Looking*, when
+it was still an attempt at a GAN, and it contains every wrong turn and misunderstanding
+on the way to the script that shipped. Read alongside the section above, it is the other
+half of the account: the specification, the conversation, and the gap between what was
+asked for and what was built.
 
 ## Repository
 
 ```
-scripts/         the two versions
-documentation/   the original design documents and flow diagrams, as written in 2024
-  2023-build-logs/   the AI sessions in which the script was written
+scripts/           the two versions
+documentation/     the 2024 design documents and flow diagrams, unedited
+  2023-build-logs/ the sessions in which the script was written
 ```
 
-The design documents are unedited. They describe the system as intended, which is
-not in every respect the system that exists — that gap is the subject above.
+The design documents describe the system as intended, which is not in every respect the
+system that exists. That gap is the subject above.
 
 ---
 
